@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,13 @@ namespace InstantImageEditor.Filters.ResizeFilter
 	{
 		public Stream Filter(Stream image)
 		{
-			throw new NotImplementedException();
+			var img = (Bitmap) Image.FromStream(image);
+			var filter = new AForge.Imaging.Filters.ResizeBilinear(_width, _height);
+			var resizedImg = filter.Apply(img);
+			var stream = new MemoryStream();
+			resizedImg.Save(stream, img.RawFormat);
+			stream.Seek(0, SeekOrigin.Begin);
+			return stream;
 		}
 
 		public bool IsSuitable(string extension)

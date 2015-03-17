@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using System.Windows;
 
 namespace InstantImageEditor.Gui
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
+	public partial class App
 	{
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
+#if DEBUG
+			new MainWindow(@"C:\Users\Andrew\Pictures\Galaxy.jpg",
+				FilterControlFactory.GetFilterControl("Resize")).Show();
+#else
+			new MainWindow(e.Args[0],
+				FilterControlFactory.GetFilterControl(e.Args[1])).Show();
+#endif
+		}
 	}
 }
