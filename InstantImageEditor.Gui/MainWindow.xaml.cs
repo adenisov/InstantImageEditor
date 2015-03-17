@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InstantImageEditor.Common;
+using Microsoft.Win32;
 
 namespace InstantImageEditor.Gui
 {
@@ -20,9 +22,27 @@ namespace InstantImageEditor.Gui
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow()
+		public MainWindow(string inputImagePath,
+			FilterControlBase filterControl)
 		{
+			_inputImagePath = inputImagePath;
+			_filterControl = filterControl;
 			InitializeComponent();
+		}
+
+		private readonly string _inputImagePath;
+		private readonly FilterControlBase _filterControl;
+
+		private void SaveButton_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new SaveFileDialog();
+			var dialogResult = dialog.ShowDialog(this);
+			if (dialogResult.Value)
+			{
+				var editor = new ImageEditor();
+				editor.Edit(_inputImagePath,
+					dialog.FileName, _filterControl.GetFilter());
+			}
 		}
 	}
 }
