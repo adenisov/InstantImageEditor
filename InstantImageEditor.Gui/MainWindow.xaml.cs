@@ -22,12 +22,13 @@ namespace InstantImageEditor.Gui
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow(string inputImagePath,
-			FilterControlBase filterControl)
+		public MainWindow(string inputImagePath, FilterControlBase filterControl)
 		{
+			InitializeComponent();
 			_inputImagePath = inputImagePath;
 			_filterControl = filterControl;
-			InitializeComponent();
+			ContentMain.Children.Add(_filterControl);
+			Grid.SetRow(_filterControl, 0);
 		}
 
 		private readonly string _inputImagePath;
@@ -35,13 +36,19 @@ namespace InstantImageEditor.Gui
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
+			var filter = _filterControl.GetFilter();
+			if (filter == null)
+			{
+				MessageBox.Show(this, "Specify correct arguments for transformation");
+				return;
+			}
 			var dialog = new SaveFileDialog();
 			var dialogResult = dialog.ShowDialog(this);
 			if (dialogResult.Value)
 			{
 				var editor = new ImageEditor();
-				editor.Edit(_inputImagePath,
-					dialog.FileName, _filterControl.GetFilter());
+				editor.Edit(_inputImagePath, dialog.FileName, filter);
+				Application.Current.Shutdown(0);
 			}
 		}
 	}

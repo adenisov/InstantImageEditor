@@ -68,6 +68,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -100,6 +104,10 @@
     <ProjectReference Include="..\InstantImageEditor.Common\InstantImageEditor.Common.csproj">
       <Project>{64EF1785-8D33-467F-A08A-7E8A523BA5AE}</Project>
       <Name>InstantImageEditor.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InstantImageEditor.ResizeFilter\InstantImageEditor.ResizeFilter.csproj">
+      <Project>{CFE30838-ADA6-4066-A4AF-A0E52B307EEF}</Project>
+      <Name>InstantImageEditor.ResizeFilter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

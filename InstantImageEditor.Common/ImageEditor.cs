@@ -24,6 +24,7 @@ namespace InstantImageEditor.Common
 			}
 			using (var stream = new FileStream(outputPath, FileMode.OpenOrCreate))
 			{
+				outputStream.CopyTo(stream);
 				//var packetLength = 1024;
 				//outputStream.Read()
 				//stream.Write();
